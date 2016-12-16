@@ -19,7 +19,7 @@
 			menuClose     : true,
 			autoClose    : true,
 			autoExpand	 : false,
-			speed        : 'slow',
+			speed        : 'faste',
 			saveState	 : true,
 			disableLink	 : true,			showCount : false,
 			cookie	: 'dcjq-accordion'

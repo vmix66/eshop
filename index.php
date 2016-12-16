@@ -1,9 +1,13 @@
 <?php
 
+	error_reporting(E_ALL & ~E_NOTICE);
+
 	require_once 'config.php';
 	require_once 'functions.php';
 
 	$categories = get_cat();
+	$categories_tree = map_tree($categories);
+	$categories_menu = categories_to_string($categories_tree);
 
 	?>
 
@@ -15,6 +19,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Document</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <div class="container">
@@ -58,7 +63,7 @@
 			<div id="cats">
 				<div id="categories_title">Категории</div>
 				<ul class="category">
-					<li><a href=""><?php //echo $categories_list; ?></a></li>
+					<li><a href=""><?= $categories_menu ?></a></li>
 				</ul>
 			</div>
 			<div id="vend">
@@ -69,7 +74,6 @@
 			</div>
 		</aside>
 		<main class="col-sm-9">
-			<?php print_arr($categories); ?>
 
 		</main>
 	</div>
@@ -78,6 +82,14 @@
 		<footer><?php echo "&copy; Ocelot Studio  -  2017"; ?></footer>
 	</div>
 </div>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="js/jquery.accordion.js"></script>
+<script src="js/jquery.cookie.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.category').dcAccordion();
+    });
+</script>
 </body>
 </html>
