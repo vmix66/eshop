@@ -31,13 +31,13 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="#">Ocelot</a>
+						<a class="navbar-brand" href="/">Ocelot</a>
 					</div>
 
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav" id="menu1">
-							<li class="active"><a href="index.php">Главная</a><span class="sr-only">(current)</span></li>
+							<li class="active"><a href="/">Главная</a><span class="sr-only">(current)</span></li>
 							<li><a href="./admin/index.php">Товары</a></li>
 							<li><a href="./admin/categories.php">Категории</a></li>
 							<li><a href="#">Корзина</a></li>
@@ -72,7 +72,14 @@
 	            <?php echo $breadcrumbs; ?>
             </p>
             <hr>
-            <?php print_arr($categories); ?>
+            <?php if($products) : ?>
+                <?php foreach($products as $product) : ?>
+                    <a href="?product=<?= $product['id'] ?>"><?= $product['title'] ?></a><br>
+                <?php endforeach; ?>
+            <?php else : ?>
+                <?php echo "Здесь товаров нет!"; ?>
+            <?php endif; ?>
+
 		</main>
 	</div>
 

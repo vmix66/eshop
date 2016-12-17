@@ -81,3 +81,38 @@
 		//echo $i; // для проверки сколько итераций прошло
 		return array_reverse($breadcrumbs_array, true); // true для сохранения ключей
 	}
+
+
+	/**
+	 * Получение id дочерних категорий
+	 * @param $array
+	 * @param $id
+	 *
+	 * @return bool|string
+	 */
+	function cats_id($array, $id) {
+		if(!$id) return false;
+
+		foreach($array as $item) {
+			if($item['parentId'] == $id) {
+				$data .= $item['id'] . ",";
+				$data .= cats_id($array, $item['id']);
+			}
+		}
+		return $data;
+	}
+
+	function get_products($ids = false) {
+		global $connection;
+		if($ids) {
+			$query = "SELECT * FROM products WHERE  categoryId IN($ids) ORDER BY title";
+		} else {
+			$query = "SELECT * FROM products ORDER BY title";
+		}
+		$res = mysqli_query($connection, $query);
+		$products = [];
+		while($row = mysqli_fetch_assoc($res)) {
+			$products[] = $row;
+		}
+		return $products;
+	}
