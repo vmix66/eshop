@@ -66,3 +66,18 @@
 
 		return ob_get_clean();
 	}
+
+	function breadcrumbs($array, $id) {
+		if(!$id) return false;
+
+		$count = count($array);
+		$breadcrumbs_array = [];
+		for($i = 0; $i < $count; $i++) {
+			if($array[$id]) {
+				$breadcrumbs_array[$array[$id]['id']] = $array[$id]['name'];
+				$id = $array[$id]['parentId'];
+			} else break;
+		}
+		//echo $i; // для проверки сколько итераций прошло
+		return array_reverse($breadcrumbs_array, true); // true для сохранения ключей
+	}
