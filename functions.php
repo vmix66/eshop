@@ -142,5 +142,35 @@
 	}
 
 	function pagination($page, $count_pages) {
-		return "Постраничная навигация";
+
+		// <<  <  3  4  5  6  7  >  >>
+		// $startpage - ссылка в НАЧАЛО
+		// $endpage - ссылка в КОНЕЦ
+		// $back - ссылка НАЗАД
+		// $forward - ссылка ВПЕРЕД
+		// $page1left - ссылка на ОДНУ страницу влево
+		// $page2left - ссылка на ДВЕ страницу влево
+		// $page1right - ссылка на ОДНУ страницу вправо
+		// $page2right - ссылка на ДВЕ страницу вправо
+
+		// проверка есть ли что до параметра page и сохранение этого "что-то"
+		$uri = "?";
+		// если есть параметры в адресной строке
+		if($_SERVER['QUERY_STRING']) {
+			foreach ($_GET as $key => $value) {
+				if($key != 'page') $uri .= "$key=$value&amp;";
+			}
+		}
+
+		if($page > 1) $back = "<li><a class='nav-link' href='{$uri}page=" . ($page-1) . "'>&lt;</a>"; // ссылка НАЗАД
+		if($page < $count_pages) $forward = "<li><a class='nav-link' href='{$uri}page=" . ($page+1) . "'>&gt;</a></li>"; // ссылка ВПЕРЕД
+		if($page > 3) $startpage = "<li><a class='nav-link' href='{$uri}page=" . 1 . "'>&lt;&lt;</a></li>"; // ссылка В НАЧАЛО
+		if($page < ($count_pages - 2)) $endpage = "<li><a class='nav-link' href='{$uri}page=" . $count_pages . "'>&gt;&gt;</a></li>"; // ссылка В КОНЕЦ
+		if(($page - 2) > 0 ) $page2left = "<li><a class='nav-link' href='{$uri}page=" . ($page - 2) . "'>" . ($page - 2) . "</a></li>"; // ссылка на 2-ю слева
+		if(($page - 1) > 0 ) $page1left = "<li><a class='nav-link' href='{$uri}page=" . ($page - 1) . "'>" . ($page - 1) . "</a></li>"; // ссылка на 1-ю слева
+		if(($page + 1) <= $count_pages ) $page1right = "<li><a class='nav-link' href='{$uri}page=" . ($page + 1) . "'>" . ($page + 1) . "</a></li>"; // ссылка на 1-ю справа
+		if(($page + 2) <= $count_pages ) $page2right = "<li><a class='nav-link' href='{$uri}page=" . ($page + 2) . "'>" . ($page + 2) . "</a></li>"; // ссылка на 2-ю справа
+
+		return $startpage. $back . $page2left . $page1left . '<li class="nav-active"><a>'. $page . '</a></li>' . $page1right . $page2right . $forward . $endpage;
+
 	}

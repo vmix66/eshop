@@ -73,13 +73,23 @@
             </p>
             <hr>
             <?php if($products) : ?>
-                <div class="pagination">
-                    <?= $pagination ?>
-                </div>
+
+                <?php if($count_pages > 1) : ?> <!-- верхняя пагинация -->
+                    <ul class="pagination">
+                        <?= $pagination ?>
+                    </ul>
+                <?php endif; ?> <!-- конец верхней пагинации -->
                 <br>
                 <?php foreach($products as $product) : ?>
                     <a href="?product=<?= $product['id'] ?>"><?= $product['title'] ?></a><br>
                 <?php endforeach; ?>
+
+                <?php if($count_pages > 1) : ?> <!-- нижняя пагинация -->
+                    <ul class="pagination">
+			            <?= $pagination ?>
+                    </ul>
+	            <?php endif; ?> <!-- конец нижней пагинации -->
+
             <?php else : ?>
                 <?php echo "Здесь товаров нет!"; ?>
             <?php endif; ?>
