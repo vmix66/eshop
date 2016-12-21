@@ -73,6 +73,10 @@
             </p>
             <hr>
             <?php if($products) : ?>
+                <div class="pagination">
+                    <?= $pagination ?>
+                </div>
+                <br>
                 <?php foreach($products as $product) : ?>
                     <a href="?product=<?= $product['id'] ?>"><?= $product['title'] ?></a><br>
                 <?php endforeach; ?>

@@ -102,12 +102,18 @@
 		return $data;
 	}
 
-	function get_products($ids = false) {
+	/**
+	 *  Получение списка товаров
+	 * @param $ids
+	 *
+	 * @return array
+	 */
+	function get_products($ids, $start_pos, $perpage) {
 		global $connection;
 		if($ids) {
-			$query = "SELECT * FROM products WHERE  categoryId IN($ids) ORDER BY title";
+			$query = "SELECT * FROM products WHERE  categoryId IN($ids) ORDER BY title LIMIT $start_pos, $perpage";
 		} else {
-			$query = "SELECT * FROM products ORDER BY title";
+			$query = "SELECT * FROM products ORDER BY title LIMIT $start_pos, $perpage";
 		}
 		$res = mysqli_query($connection, $query);
 		$products = [];
@@ -115,4 +121,26 @@
 			$products[] = $row;
 		}
 		return $products;
+	}
+
+	/**
+	 * Количество товаров
+	 * @param $ids
+	 *
+	 * @return mixed
+	 */
+	function count_goods($ids) {
+		global $connection;
+		if(!$ids) {
+			$query = "SELECT COUNT(*) FROM products";
+		} else {
+			$query = "SELECT COUNT(*) FROM products WHERE categoryId IN ($ids)";
+		}
+		$res = mysqli_query($connection, $query);
+		$count_goods = mysqli_fetch_row($res);
+		return $count_goods[0];
+	}
+
+	function pagination($page, $count_pages) {
+		return "Постраничная навигация";
 	}
