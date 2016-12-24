@@ -72,8 +72,15 @@
 	            <?php echo $breadcrumbs; ?>
             </p>
             <hr>
+            <div class="group-control">
+                <label for="perpage">товаров на страницу</label>
+                <select name="perpage" id="perpage">
+                    <?php foreach($option_perpage as $option) : ?>
+                    <option <?php if($perpage == $option) echo "selected "; ?>value="<?= $option ?>"><?= $option ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
             <?php if($products) : ?>
-
                 <?php if($count_pages > 1) : ?> <!-- верхняя пагинация -->
                     <div class="pagination">
                         <?= $pagination ?>
@@ -83,15 +90,17 @@
                 <?php foreach($products as $product) : ?>
                     <a href="<?= PATH ?>product.php?product=<?= $product['id'] ?>"><?= $product['title'] ?></a><br>
                 <?php endforeach; ?>
-
+                <br>
                 <?php if($count_pages > 1) : ?> <!-- нижняя пагинация -->
-                    <ul class="pagination">
+                    <div class="pagination">
 			            <?= $pagination ?>
-                    </ul>
+                    </div>
 	            <?php endif; ?> <!-- конец нижней пагинации -->
-
+                <br>
             <?php else : ?>
+
                 <?php echo "Здесь товаров нет!"; ?>
+
             <?php endif; ?>
 
 		</main>
@@ -110,6 +119,12 @@
 <script>
     $(document).ready(function() {
         $('.category').dcAccordion();
+        $('#perpage').change(function() {
+            var perPage = this.value;
+            $.cookie('per_page', perPage, {expires: 7});
+            window.location = location.href;
+        });
+
     });
 </script>
 </body>

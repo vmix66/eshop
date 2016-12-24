@@ -46,7 +46,7 @@
 	$ids = !$ids ? $id : rtrim($ids, ","); // Если NULL в $ids, то вытащим только товары из этой ($id) категории
 
 	// ======== Пагинация ==========
-	$perpage = 2; // кол-во товаров на страницу
+	$perpage = (int)$_COOKIE['per_page'] ? $_COOKIE['per_page'] : PERPAGE ; // кол-во товаров на страницу
 	$count_goods = count_goods($ids); // сколько товаров всего в выбранной категории и ее подкатегориях
 	$count_pages = ceil($count_goods / $perpage); // сколько потребуется страниц
 	if(!$count_pages) $count_pages = 1; // минимум одна страница
