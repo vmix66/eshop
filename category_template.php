@@ -1,5 +1,5 @@
 <li>
-	<a href="?category=<?= $category['id'] ?>"><?= $category['name'] ?></a>
+	<a href="<?= PATH ?>?category=<?= $category['id'] ?>"><?= $category['name'] ?></a>
 	<?php if($category['childs']) : ?>
 		<ul>
 			<?php echo categories_to_string($category['childs']); ?>

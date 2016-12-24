@@ -8,21 +8,37 @@
 	$categories_menu = categories_to_string($categories_tree);
 
 
-	$id = (int)$_GET['category'];
+
+	if(isset($_GET['product'])) {
+		$product_id = (int)$_GET['product'];
+		// массив данных продукта
+		$get_one_product = get_one_product($product_id);
+		// получение id категории
+		$id = $get_one_product['categoryId'];
+
+	} else {
+		$id = (int)$_GET['category'];
+	}
 
 	//хлебные крошки
 	// вернет true если (not empty array) || (not false)
 	$breadcrumbs_array = breadcrumbs($categories, $id);
 
 	if($breadcrumbs_array) {
-		$breadcrumbs = "<a href='/'>Главная</a> / ";
+		$breadcrumbs = "<a href='" . PATH . "'>Главная</a> / ";
 		foreach($breadcrumbs_array as $id => $name) {
-			$breadcrumbs .= "<a href='?category={$id}'>{$name}</a> / ";
+			$breadcrumbs .= "<a href='" . PATH . "?category={$id}'>{$name}</a> / ";
 		}
-		$breadcrumbs = rtrim($breadcrumbs, " / ");
-		$breadcrumbs = preg_replace("~(.+)?<a.+>(.+)</a>$~", "$1$2", $breadcrumbs); // убираем ссылку <a> на последний элемент
+
+		if(!isset($get_one_product)) {
+			$breadcrumbs = rtrim($breadcrumbs, " / ");
+			$breadcrumbs = preg_replace("~(.+)?<a.+>(.+)</a>$~", "$1$2", $breadcrumbs); // убираем ссылку <a> на последний элемент
+		} else {
+			$breadcrumbs .= $get_one_product['title'];
+		}
+
 	} else {
-			$breadcrumbs = "<a href='/'>Главная</a> / Каталог";
+			$breadcrumbs = "<a href='" . PATH . "'>Главная</a> / Каталог";
 	}
 
 	// Получение id всех дочерних категорий

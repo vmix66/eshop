@@ -124,6 +124,19 @@
 	}
 
 	/**
+	 * @param $product_id
+	 *
+	 * @return array|null
+	 */
+	function get_one_product($product_id) {
+		global $connection;
+		$query = "SELECT * FROM products WHERE id = {$product_id}";
+		$res = mysqli_query($connection, $query);
+		return mysqli_fetch_assoc($res);
+
+	}
+
+	/**
 	 * Количество товаров
 	 * @param $ids
 	 *
@@ -162,7 +175,7 @@
 			}
 		}
 
-		if($page > 1) $back = "<li><a class='nav-link' href='{$uri}page=" . ($page-1) . "'>&lt;</a>"; // ссылка НАЗАД
+		if($page > 1) $back = "<li><a class='nav-link' href='{$uri}page=" . ($page-1) . "'>&lt;</a></li>"; // ссылка НАЗАД
 		if($page < $count_pages) $forward = "<li><a class='nav-link' href='{$uri}page=" . ($page+1) . "'>&gt;</a></li>"; // ссылка ВПЕРЕД
 		if($page > 3) $startpage = "<li><a class='nav-link' href='{$uri}page=" . 1 . "'>&lt;&lt;</a></li>"; // ссылка В НАЧАЛО
 		if($page < ($count_pages - 2)) $endpage = "<li><a class='nav-link' href='{$uri}page=" . $count_pages . "'>&gt;&gt;</a></li>"; // ссылка В КОНЕЦ
@@ -171,6 +184,6 @@
 		if(($page + 1) <= $count_pages ) $page1right = "<li><a class='nav-link' href='{$uri}page=" . ($page + 1) . "'>" . ($page + 1) . "</a></li>"; // ссылка на 1-ю справа
 		if(($page + 2) <= $count_pages ) $page2right = "<li><a class='nav-link' href='{$uri}page=" . ($page + 2) . "'>" . ($page + 2) . "</a></li>"; // ссылка на 2-ю справа
 
-		return $startpage. $back . $page2left . $page1left . '<li class="nav-active"><a>'. $page . '</a></li>' . $page1right . $page2right . $forward . $endpage;
+		return $startpage. $back . $page2left . $page1left . "<li><a class='nav-active'>". $page . "</a></li>" . $page1right . $page2right . $forward . $endpage;
 
 	}

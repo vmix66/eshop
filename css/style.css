@@ -17,7 +17,7 @@ footer {
     text-align: center;
 }
 
-.pagination li {
+.pagination li>a {
     border: 1px solid #ddd;
     padding: 6px 12px;
     text-decoration: none;
@@ -25,28 +25,28 @@ footer {
     color: #428bca;
 }
 
-.pagination li:nth-child(even) {
+.pagination li>a:nth-child(even) {
     border-left: none;
     border-right: none;
 }
 
-.pagination li:first-child {
+.pagination li>a:first-child {
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
 }
-.pagination li:last-child {
+.pagination li>a:last-child {
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
     border-right: 1px solid #ddd;
 }
 
-.pagination > li.nav-active  {
+.pagination > li > a.nav-active  {
     background: #428bca;
     color: white;
 }
 
 .pagination a:hover {
-    background: #eee;
+    background: red;
 }
 
 
